@@ -18,7 +18,7 @@
 		<Searchbar />
 		<button
 			on:click={() =>
-				fetch("/api/posts", {
+				fetch('/api/posts', {
 					method: 'POST',
 					body: JSON.stringify({
 						title: 'How to create new post? Posted from Svelte xoxo',
@@ -31,10 +31,10 @@
 		>
 	</div>
 	{#if result.results}
-	{#each result.results as post}
-		<div class=" min-w-[460px] flex flex-row flex-wrap justify-center mt-[16px]">
-			<PostCard {post} />
-		</div>
-	{/each}
+		{#each result.results as post}
+			<div class=" min-w-[460px] flex flex-row flex-wrap justify-center mt-[16px] text-zinc-200">
+				<PostCard {post} />
+			</div>
+		{/each}
 	{/if}
 </div>

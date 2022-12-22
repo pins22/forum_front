@@ -1,8 +1,8 @@
 <script>
-  import Navbar from "$lib/navbar.svelte";
+	import Navbar from '$lib/navbar.svelte';
 </script>
 
-<Navbar/>
-<div class="mx-[8px]">
-  <slot />
+<Navbar />
+<div class = "bg-zinc-900" style="min-height: 90vh">
+	<slot />
 </div>
