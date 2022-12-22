@@ -18,7 +18,7 @@
 		<Searchbar />
 		<button
 			on:click={() =>
-				fetch('http://localhost:3000/api/v1/posts/', {
+				fetch("/api/posts/", {
 					method: 'POST',
 					body: JSON.stringify({
 						title: 'How to create new post? Posted from Svelte xoxo',
