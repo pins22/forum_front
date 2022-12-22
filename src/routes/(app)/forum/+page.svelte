@@ -26,14 +26,16 @@
 					}),
 					headers: {
 						'Content-Type': 'application/json',
-						Authorization: 'Bearer ' + session.accessToken
+						Authorization: 'Bearer ' + session?.accessToken
 					}
 				})}>New</button
 		>
 	</div>
+	{#if result.results}
 	{#each result.results as post}
 		<div class=" min-w-[460px] flex flex-row flex-wrap justify-center mt-[16px]">
 			<PostCard {post} />
 		</div>
 	{/each}
+	{/if}
 </div>
