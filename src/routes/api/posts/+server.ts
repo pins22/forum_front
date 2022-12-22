@@ -10,16 +10,12 @@ export const GET = (async ({ url, setHeaders }) => {
 	return data;
 }) satisfies RequestHandler;
 
-export const POST = (async ({ request }) => {
-	const $page = await get(page);
-	console.log('TOKEN: ', (<TokenSession>$page.data.session).accessToken);
+export const POST = (async ({ request, locals }) => {
+	const session: TokenSession = <TokenSession>await locals.getSession();
 	const data = await fetch(`${API_URL}posts/`, {
 		method: 'POST',
-		headers: Object.assign(
-			{ Authorization: `Bearer ${(<TokenSession>$page.data.session).accessToken}` },
-			request.headers
-		),
-		body: request.body
+		headers: { "Authorization": `Bearer ${session.accessToken}`, "Content-Type": "application/json" },
+		body: JSON.stringify(await request.json())
 	});
 	return data;
 }) satisfies RequestHandler;

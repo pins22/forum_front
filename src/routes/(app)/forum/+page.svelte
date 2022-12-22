@@ -18,15 +18,14 @@
 		<Searchbar />
 		<button
 			on:click={() =>
-				fetch("/api/posts/", {
+				fetch("/api/posts", {
 					method: 'POST',
 					body: JSON.stringify({
 						title: 'How to create new post? Posted from Svelte xoxo',
 						body: 'This is a post aka a question which was successfully created from Svelte.'
 					}),
 					headers: {
-						'Content-Type': 'application/json',
-						Authorization: 'Bearer ' + session?.accessToken
+						'Content-Type': 'application/json'
 					}
 				})}>New</button
 		>
