@@ -18,22 +18,23 @@
 		<Searchbar />
 		<button
 			on:click={() =>
-				fetch('http://localhost:3000/api/v1/posts/', {
+				fetch('/api/posts', {
 					method: 'POST',
 					body: JSON.stringify({
 						title: 'How to create new post? Posted from Svelte xoxo',
 						body: 'This is a post aka a question which was successfully created from Svelte.'
 					}),
 					headers: {
-						'Content-Type': 'application/json',
-						Authorization: 'Bearer ' + session.accessToken
+						'Content-Type': 'application/json'
 					}
 				})}>New</button
 		>
 	</div>
-	{#each result.results as post}
-		<div class=" min-w-[460px] flex flex-row flex-wrap justify-center mt-[16px]">
-			<PostCard {post} />
-		</div>
-	{/each}
+	{#if result.results}
+		{#each result.results as post}
+			<div class=" min-w-[460px] flex flex-row flex-wrap justify-center mt-[16px] text-zinc-200">
+				<PostCard {post} />
+			</div>
+		{/each}
+	{/if}
 </div>
