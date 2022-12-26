@@ -3,7 +3,7 @@
 	import { signOut } from '@auth/sveltekit/client';
 </script>
 
-<nav class="w-100 h-[10vh] sticky bg-zinc-800">
+<nav class="w-100 h-14 sticky bg-zinc-800">
 	<div
 		id="normal-links"
 		class="hidden sm:flex flex-row h-100 items-center min-h-full justify-between"
@@ -70,7 +70,7 @@
 		<button class="relative w-12 h-12 mr-4" data-dropdown-toggle="dropdown">
 			<img
 				class="rounded-full border border-gray-100 shadow-sm text-zinc-200"
-				src={$page.data.session?.user?.image}
+				src="{$page.data.session?.user?.image || 'https://st3.depositphotos.com/1767687/16607/v/450/depositphotos_166074422-stock-illustration-default-avatar-profile-icon-grey.jpg'}"
 				alt="user image"
 			/>
 			<div

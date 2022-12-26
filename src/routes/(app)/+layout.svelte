@@ -3,6 +3,6 @@
 </script>
 
 <Navbar />
-<div class = "bg-zinc-900" style="min-height: 90vh">
+<div class="mx-[8px]">
 	<slot />
 </div>
