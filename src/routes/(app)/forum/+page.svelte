@@ -5,6 +5,7 @@
 	import type { Result } from 'src/routes/api/posts/posts';
 	import { page } from '$app/stores';
 	import type { TokenSession } from '$lib/auth.types';
+	import { redirect } from '@sveltejs/kit';
 	export let data: PageData;
 	const result = <Result>data.item;
 	const session: TokenSession = data.session;
@@ -14,20 +15,16 @@
 	<div class=" min-w-[460px] flex flex-row flex-wrap justify-center">
 		<h1 class="">Casual Physics For Vehicles Forum</h1>
 	</div>
-	<div class=" min-w-[460px] flex flex-row flex-wrap justify-center">
-		<Searchbar />
-		<button
-			on:click={() =>
-				fetch('/api/posts', {
-					method: 'POST',
-					body: JSON.stringify({
-						title: 'How to create new post? Posted from Svelte xoxo',
-						body: 'This is a post aka a question which was successfully created from Svelte.'
-					}),
-					headers: {
-						'Content-Type': 'application/json'
-					}
-				})}>New</button
+	<div class="flex w-1/2 mx-auto">
+		<Searchbar _class="w-full my-12"/>
+	</div>
+	<div class="flex w-1/2 mx-auto justify-end">
+		<a href="/forum/new">
+			<button
+				type="button"
+				class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+				>New</button
+			></a
 		>
 	</div>
 	{#if result.results}
