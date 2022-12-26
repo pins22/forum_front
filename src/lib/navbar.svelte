@@ -3,7 +3,7 @@
 	import { signOut } from '@auth/sveltekit/client';
 </script>
 
-<nav class="w-100 h-14 sticky bg-blue-500">
+<nav class="w-100 h-14 sticky bg-zinc-800">
 	<div
 		id="normal-links"
 		class="hidden sm:flex flex-row h-100 items-center min-h-full justify-between"
@@ -11,7 +11,7 @@
 		<div class="basis-10/12 flex flex-row">
 			<a
 				href="/get-started/"
-				class="py-4 px-4 max-w-fit min-w-fit flex flex-row items-center justify-between"
+				class="py-4 px-4 max-w-fit min-w-fit flex flex-row items-center justify-between text-zinc-200"
 				><svg
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"
@@ -30,7 +30,7 @@
 			>
 			<a
 				href="/docs/"
-				class="py-4 px-4 max-w-fit min-w-fit flex flex-row items-center justify-between"
+				class="py-4 px-4 max-w-fit min-w-fit flex flex-row items-center justify-between text-zinc-200"
 				><svg
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"
@@ -49,7 +49,7 @@
 			>
 			<a
 				href="/forum/"
-				class="py-4 px-4 max-w-fit min-w-fit flex flex-row items-center justify-between"
+				class="py-4 px-4 max-w-fit min-w-fit flex flex-row items-center justify-between text-zinc-200"
 				><svg
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"
@@ -69,8 +69,8 @@
 		</div>
 		<button class="relative w-12 h-12 mr-4" data-dropdown-toggle="dropdown">
 			<img
-				class="rounded-full border border-gray-100 shadow-sm"
-				src={$page.data.session?.user?.image}
+				class="rounded-full border border-gray-100 shadow-sm text-zinc-200"
+				src="{$page.data.session?.user?.image || 'https://st3.depositphotos.com/1767687/16607/v/450/depositphotos_166074422-stock-illustration-default-avatar-profile-icon-grey.jpg'}"
 				alt="user image"
 			/>
 			<div
@@ -86,7 +86,7 @@
 				<span class="block text-sm"
 					>{$page.data.session?.user?.name ? $page.data.session?.user?.name : 'Not signed in'}</span
 				>
-				<span class="block text-sm font-medium text-gray-900 truncate"
+				<span class="block text-sm font-medium text-zinc-200 truncate"
 					>{$page.data.session?.user?.email ? $page.data.session?.user?.email : ''}</span
 				>
 			</div>
