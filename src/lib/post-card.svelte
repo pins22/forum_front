@@ -11,7 +11,7 @@
 	<div class="rounded border-2 w-full h-[112px] flex flex-col">
 		<div class="flex flex-row items-center basis-11/12">
 			<div class="ml-1">
-				<Label value={-1 - post.points} variant={post.points - 1 >= 0 ? 'success' : 'danger'} />
+				<Label value={post.points} variant={post.points >= 0 ? 'success' : 'danger'} />
 			</div>
 			<div class="ml-2">
 				<h1>
