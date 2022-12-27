@@ -37,6 +37,8 @@
 		"@auth/sveltekit": "^0.1.6",
 		"@sveltejs/adapter-node": "^1.0.0",
 		"dayjs": "^1.11.7",
-		"dotenv": "^16.0.3"
+		"dotenv": "^16.0.3",
+		"snarkdown": "^2.0.0",
+		"svelte-markdown": "^0.2.3"
 	}
 }

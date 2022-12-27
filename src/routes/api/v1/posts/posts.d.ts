@@ -1,5 +1,5 @@
 export interface Post {
-	pk: number;
+	id: number;
 	title: string;
 	body: string;
 	created_at: string;
@@ -9,7 +9,7 @@ export interface Post {
 }
 
 export interface Reply {
-	pk: number;
+	id: number;
 	post: Post;
 	body: string;
 	created_at: string;

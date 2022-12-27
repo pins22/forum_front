@@ -1,7 +1,7 @@
 import type { ServerLoad } from '@sveltejs/kit';
 
 export const load = (async ({ fetch, params }) => {
-	const res = await fetch(`/api/posts`);
+	const res = await fetch(`/api/v1/posts`);
 	if (res.status != 200) {
     console.log("ERROR");
 		console.log(res.status)
