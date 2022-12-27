@@ -29,7 +29,7 @@
 		<button
 			class="px-4 py-2 mt-3 float-right text-sm font-medium bg-blue-600 text-white rounded-full border-2 border-blue-600 transition-color duration-150 hover:bg-blue-900 hover:border-blue-900"
 			on:click={() =>
-				fetch('/api/posts', {
+				fetch('/api/v1/posts', {
 					method: 'POST',
 					body: JSON.stringify({
 						title: title,
