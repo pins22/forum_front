@@ -1,8 +1,10 @@
 <script lang="ts">
-  export let htmlContent: string;
+	import { marked } from "marked";
+
+  export let markdown: string;
 </script>
 
-<div class="markdown-body">{@html htmlContent}</div>
+<div class="markdown-body">{@html marked.parse(markdown)}</div>
 
 <style>
 	.markdown-body {

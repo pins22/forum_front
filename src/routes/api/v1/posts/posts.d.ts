@@ -6,6 +6,8 @@ export interface Post {
 	last_changed: string;
 	author: Author;
 	points: number;
+	has_user_upvoted: boolean;
+	has_user_downvoted: boolean;
 }
 
 export interface Reply {
