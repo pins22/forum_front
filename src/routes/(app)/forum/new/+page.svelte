@@ -6,7 +6,6 @@
 
 	function pasteHandler(e: ClipboardEvent) {
 		e.preventDefault();
-		console.log(e.clipboardData?.types)
 		if (e.clipboardData?.files.length)
 			content += e.clipboardData?.getData('text/html')
 		else
@@ -78,7 +77,7 @@
 					role="tabpanel"
 					aria-labelledby="preview-tab"
 				>
-					<RenderedPost htmlContent={marked.parse(content)} />
+					<RenderedPost markdown={content} />
 				</div>
 				<div class="flex justify-end">
 					<button
