@@ -10,7 +10,7 @@ import {
 	GOOGLE_OAUTH_SECRET,
 	API_LOGIN_URL
 } from '$env/static/private';
-import type { Handle } from '@sveltejs/kit';
+import type { HandleServerError } from '@sveltejs/kit';
 
 export const handle = SvelteKitAuth({
 	providers: [
@@ -30,8 +30,10 @@ export const handle = SvelteKitAuth({
 					}),
 					headers: { 'Content-Type': 'application/json' }
 				});
+
 				const responseBody = await fetchResult.json();
 				user.accessToken = responseBody['access_token'];
+				user.refreshToken = responseBody['refresh_token'];
 				if (fetchResult.status == 200) {
 					return true;
 				}
@@ -43,13 +45,22 @@ export const handle = SvelteKitAuth({
 			const { token, user } = jwtParams;
 			if (user) {
 				token.accessToken = user.accessToken;
+				token.refreshToken = user.refreshToken;
 			}
 			return token;
 		},
 		async session(sessionParams: SessionParams) {
 			const { session, user, token } = sessionParams;
 			session.accessToken = token.accessToken;
+			session.refreshToken = token.refreshToken;
 			return session;
 		}
 	}
 });
+
+// export const handleError: HandleServerError = (({ error, event }) => {
+// 	return {
+// 		status: 418,
+// 		message: 'NO message MI AMOR'
+// 	};
+// }) satisfies HandleServerError;

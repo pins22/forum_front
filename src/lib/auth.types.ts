@@ -27,12 +27,13 @@ export interface SignInParams {
 	};
 }
 
-export interface AccessTokenJWT extends JWT {
+export interface TokenJWT extends JWT {
 	accessToken?: string;
+	refreshToken?: string;
 }
 
 export interface JwtParams {
-	token: AccessTokenJWT;
+	token: TokenJWT;
 	user?: AuthenticatedUser;
 	account?: Account | null;
 	profile?: Profile;
@@ -41,9 +42,10 @@ export interface JwtParams {
 
 export interface TokenSession extends Session {
 	accessToken?: string;
+	refreshToken?: string;
 }
 export interface SessionParams {
 	session: TokenSession;
 	user: User;
-	token: AccessTokenJWT;
+	token: TokenJWT;
 }

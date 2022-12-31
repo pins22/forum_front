@@ -2,8 +2,9 @@
 	import type { PageData } from '../$types';
 	import RenderedPost from '$lib/RenderedPost.svelte';
 	import TriangleButton from '$lib/TriangleButton.svelte';
-	import type { Post } from 'src/routes/api/v1/posts/posts';
 	import { invalidate } from '$app/navigation';
+	import { vote } from '$lib/api/posts';
+	import { page } from '$app/stores';
 	// import snarkdown from 'snarkdown'
 	export let data: PageData;
 </script>
@@ -15,7 +16,7 @@
 		<div class="flex flex-col items-center">
 			<TriangleButton
 				onClick={async (e) => {
-					await fetch(`/api/v1/posts/${data.post.id}/vote?type=up`, { method: 'PATCH' });
+					await vote(data.post.id, 'type=up', $page.data.session);
 					invalidate(`api:posts/id`);
 				}}
 				type="up"
@@ -24,7 +25,7 @@
 			<strong>{data.post.points}</strong>
 			<TriangleButton
 				onClick={async (e) => {
-					await fetch(`/api/v1/posts/${data.post.id}/vote?type=down`, { method: 'PATCH' });
+					await vote(data.post.id, 'type=down', $page.data.session);
 					invalidate(`api:posts/id`);
 				}}
 				type="down"

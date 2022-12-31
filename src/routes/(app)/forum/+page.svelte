@@ -2,13 +2,7 @@
 	import Searchbar from '$lib/searchbar.svelte';
 	import PostCard from '$lib/post-card.svelte';
 	import type { PageData } from './$types';
-	import type { Result } from 'src/routes/api/v1/posts/posts';
-	import { page } from '$app/stores';
-	import type { TokenSession } from '$lib/auth.types';
-	import { redirect } from '@sveltejs/kit';
 	export let data: PageData;
-	const result = <Result>data.item;
-	const session: TokenSession = data.session;
 </script>
 
 <div>
@@ -27,11 +21,11 @@
 			></a
 		>
 	</div>
-	{#if result.results}
-		{#each result.results as post}
-				<div class=" min-w-[460px] flex flex-row flex-wrap justify-center mt-[16px] text-zinc-200">
-					<PostCard {post} />
-				</div>
+	{#if data.results}
+		{#each data.results as post}
+			<div class=" min-w-[460px] flex flex-row flex-wrap justify-center mt-[16px] text-zinc-200">
+				<PostCard {post} />
+			</div>
 		{/each}
 	{/if}
 </div>

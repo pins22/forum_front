@@ -10,15 +10,6 @@ export interface Post {
 	has_user_downvoted: boolean;
 }
 
-export interface Reply {
-	id: number;
-	post: Post;
-	body: string;
-	created_at: string;
-	last_changed: string;
-	points: number;
-}
-
 export interface Author {
 	id: number;
 	date_joined: string;

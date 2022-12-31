@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Post } from 'src/routes/api/v1/posts/posts';
+	import type { Post } from '$lib/api/posts.types';
 	import Label from './label.svelte';
 	import dayjs from 'dayjs';
 	import relativeTime from 'dayjs/plugin/relativeTime';

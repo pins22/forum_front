@@ -70,6 +70,7 @@
 		<button class="relative w-12 h-12 mr-4" data-dropdown-toggle="dropdown">
 			<img
 				class="rounded-full border border-gray-100 shadow-sm text-zinc-200"
+				referrerpolicy="no-referrer"
 				src="{$page.data.session?.user?.image || 'https://st3.depositphotos.com/1767687/16607/v/450/depositphotos_166074422-stock-illustration-default-avatar-profile-icon-grey.jpg'}"
 				alt="user image"
 			/>

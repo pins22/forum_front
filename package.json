@@ -38,6 +38,7 @@
 		"@stackoverflow/stacks-editor": "^0.8.3",
 		"@sveltejs/adapter-node": "^1.0.0",
 		"@types/marked": "^4.0.8",
+		"@zerodevx/svelte-toast": "1.0.0-rc.1",
 		"dayjs": "^1.11.7",
 		"dotenv": "^16.0.3",
 		"github-markdown-css": "^5.1.0",
