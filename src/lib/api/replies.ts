@@ -22,18 +22,23 @@ export const getReplies = async (post_id: string | number, { id, session }: GetP
 	return data;
 };
 
-export const POST = async (body: object | string, session: TokenSession | Session | null) => {
+export const createReply = async (
+	postId: string | number,
+	title: string,
+	body: string,
+	session: TokenSession | Session | null
+) => {
 	if (session === null) {
 		// show toast on errors
 		return;
 	}
 	const tokenSession: TokenSession = <TokenSession>session;
-	const data = await fetch(`${API_URL}/api/v1/posts/`, {
+	const data = await fetch(`${API_URL}/api/v1/posts/${postId}/reply/`, {
 		method: 'POST',
 		headers: Object.assign(await buildAuthHeaders(tokenSession), {
 			'Content-Type': 'application/json'
 		}),
-		body: JSON.stringify(body)
+		body: JSON.stringify({ title: title, body: body })
 	});
 	return data;
 };

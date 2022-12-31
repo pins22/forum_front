@@ -39,7 +39,7 @@ export const POST = async (body: object | string, session: TokenSession | Sessio
 };
 
 export const vote = async (
-	id: string,
+	id: string | number,
 	query: string,
 	session: TokenSession | Session | null = null
 ) => {

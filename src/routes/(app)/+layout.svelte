@@ -3,6 +3,6 @@
 </script>
 
 <Navbar />
-<div class="mx-[8px]">
+<div class="mx-[8px] mb-[24px]">
 	<slot />
 </div>
