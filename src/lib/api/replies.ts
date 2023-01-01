@@ -44,7 +44,7 @@ export const createReply = async (
 };
 
 export const vote = async (
-	id: string,
+	id: string | number,
 	query: string,
 	session: TokenSession | Session | null = null
 ) => {
@@ -54,7 +54,7 @@ export const vote = async (
 	}
 
 	const tokenSession: TokenSession = <TokenSession>session;
-	const response = await fetch(`${API_URL}/api/v1/posts/${id}/vote?${query}`, {
+	const response = await fetch(`${API_URL}/api/v1/posts/reply/${id}/vote?${query}`, {
 		method: 'PATCH',
 		headers: Object.assign(await buildAuthHeaders(tokenSession), {
 			'Content-Type': 'application/json'

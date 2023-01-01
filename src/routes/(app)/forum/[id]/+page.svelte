@@ -8,7 +8,7 @@
 	import type { Post } from '$lib/api/posts.types';
 	import type { Result as ReplyResult } from '$lib/api/replies.types';
 	import TextEditor from '$lib/TextEditor.svelte';
-	import { createReply } from '$lib/api/replies';
+	import { createReply, vote as replyVote } from '$lib/api/replies';
 	export let data: { post: Post; replies: ReplyResult };
 
 	function toggleTextEditor() {
@@ -76,7 +76,7 @@
 				toggleTextEditor();
 				invalidate(`api:posts/id`);
 			}}
-			submitButtonText="Add reply"
+			submitButtonText="Post answer"
 		/>
 	</div>
 </div>
@@ -84,7 +84,29 @@
 	<div
 		class="flex flex-col mx-auto min-w-[300px] mt-5 block p-2.5 w-7/12 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500  items-center"
 	>
-		<h3 class="text-3xl text-gray-500">{reply.title}</h3>
+		<div class="flex flex-row w-full justify-start items-start text-left">
+			<div class="flex flex-col items-center">
+				<TriangleButton
+					onClick={async (e) => {
+						await replyVote(reply.id, 'type=up', $page.data.session);
+						invalidate(`api:posts/id`);
+					}}
+					type="up"
+					isPressed={reply.has_user_upvoted}
+				/>
+				<strong>{reply.points}</strong>
+				<TriangleButton
+					onClick={async (e) => {
+						await replyVote(reply.id, 'type=down', $page.data.session);
+						invalidate(`api:posts/id`);
+					}}
+					type="down"
+					isPressed={reply.has_user_downvoted}
+				/>
+			</div>
+			<h3 class="text-3xl text-gray-500">{reply.title}</h3>
+		</div>
+		<hr class="my-2 w-full h-px bg-gray-200 border-0 dark:bg-gray-700" />
 		<RenderedPost markdown={reply.body} />
 	</div>
 {/each}
