@@ -2,6 +2,7 @@ import { PUBLIC_API_URL as API_URL } from '$env/static/public';
 import type { TokenSession } from '$lib/auth.types';
 import type { Session } from '@auth/core';
 import { buildAuthHeaders } from './headers';
+import type { Reply } from './replies.types';
 
 interface GetParams {
 	id?: string | undefined;
@@ -59,6 +60,29 @@ export const vote = async (
 		headers: Object.assign(await buildAuthHeaders(tokenSession), {
 			'Content-Type': 'application/json'
 		})
+	});
+	if (!response.ok) {
+		// throw error(response.status, response.statusText);
+	}
+	return response;
+};
+
+export const PATCH = async (
+	id: string | number,
+	data: Reply,
+	session: TokenSession | Session | null
+) => {
+	if (session === null) {
+		// show toast on errors
+		return;
+	}
+	const tokenSession: TokenSession = <TokenSession>session;
+	const response = await fetch(`${API_URL}/api/v1/posts/reply/${id}`, {
+		method: 'PATCH',
+		headers: Object.assign(await buildAuthHeaders(tokenSession), {
+			'Content-Type': 'application/json'
+		}),
+		body: JSON.stringify(data)
 	});
 	if (!response.ok) {
 		// throw error(response.status, response.statusText);

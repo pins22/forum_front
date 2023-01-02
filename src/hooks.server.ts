@@ -10,7 +10,7 @@ import {
 	GOOGLE_OAUTH_SECRET,
 	API_LOGIN_URL
 } from '$env/static/private';
-import type { HandleServerError } from '@sveltejs/kit';
+import jwtDecode from 'jwt-decode';
 
 export const handle = SvelteKitAuth({
 	providers: [
@@ -53,6 +53,12 @@ export const handle = SvelteKitAuth({
 			const { session, user, token } = sessionParams;
 			session.accessToken = token.accessToken;
 			session.refreshToken = token.refreshToken;
+			if (token.accessToken) {
+				const decoded: { user_id: number; exp: number; iat: number; jti: number } = jwtDecode(
+					token.accessToken!
+				);
+				session.userId = decoded.user_id;
+			}
 			return session;
 		}
 	}

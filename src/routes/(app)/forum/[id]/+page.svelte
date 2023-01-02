@@ -8,7 +8,7 @@
 	import type { Post } from '$lib/api/posts.types';
 	import type { Result as ReplyResult } from '$lib/api/replies.types';
 	import TextEditor from '$lib/TextEditor.svelte';
-	import { createReply, vote as replyVote } from '$lib/api/replies';
+	import { createReply, vote as replyVote, PATCH as patchReply } from '$lib/api/replies';
 	export let data: { post: Post; replies: ReplyResult };
 
 	function toggleTextEditor() {
@@ -105,6 +105,32 @@
 				/>
 			</div>
 			<h3 class="text-3xl text-gray-500">{reply.title}</h3>
+			<div class="ml-[8px] self-center">
+				{#if reply.accepted_answer || ($page.data.session != null && $page.data.session.userId === data.post.author.id && !data.post.has_accepted_answer)}
+					<button
+						class={reply.accepted_answer ? 'bg-green-300' : 'bg-slate-100'}
+						on:click={async (e) => {
+							await patchReply(
+								reply.id ?? -1,
+								{ accepted_answer: !reply.accepted_answer },
+								$page.data.session
+							);
+							invalidate(`api:posts/id`);
+						}}
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke-width="1.5"
+							stroke="currentColor"
+							class="w-[26px] h-[26px]"
+						>
+							<path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+						</svg></button
+					>
+				{/if}
+			</div>
 		</div>
 		<hr class="my-2 w-full h-px bg-gray-200 border-0 dark:bg-gray-700" />
 		<RenderedPost markdown={reply.body} />
@@ -113,12 +139,14 @@
 
 <style>
 	#text-editor-dropdown {
+		display: block;
 		height: auto;
 		opacity: 1;
-		transition: opacity 0.2s ease-out;
+		transition: opacity 0.3s ease-out;
 	}
 	#text-editor-dropdown.hide {
 		height: 0;
 		opacity: 0;
+		overflow: hidden;
 	}
 </style>

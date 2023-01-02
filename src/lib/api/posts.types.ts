@@ -8,6 +8,7 @@ export interface Post {
 	points: number;
 	has_user_upvoted: boolean;
 	has_user_downvoted: boolean;
+	has_accepted_answer: boolean;
 }
 
 export interface Author {

@@ -43,6 +43,7 @@ export interface JwtParams {
 export interface TokenSession extends Session {
 	accessToken?: string;
 	refreshToken?: string;
+	userId?: number | string;
 }
 export interface SessionParams {
 	session: TokenSession;
