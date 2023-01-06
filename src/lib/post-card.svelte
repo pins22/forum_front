@@ -7,7 +7,7 @@
 	export let post: Post;
 </script>
 
-<a href="/forum/{post.id}" class="w-1/2 h-full">
+<a href="/forum/{post.id}" class="w-5/6 max-w-[800px] min-w-[200px] h-full">
 	<div class="rounded border-2 w-full h-[112px] flex flex-col">
 		<div class="flex flex-row items-center basis-11/12">
 			<div class="ml-1">

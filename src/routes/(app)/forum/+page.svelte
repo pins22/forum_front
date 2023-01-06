@@ -6,13 +6,13 @@
 </script>
 
 <div>
-	<div class=" min-w-[460px] flex flex-row flex-wrap justify-center">
+	<div class=" min-w-[200px] flex flex-row flex-wrap justify-center">
 		<h1 class="">Casual Physics For Vehicles Forum</h1>
 	</div>
-	<div class="flex w-1/2 mx-auto">
+	<div class="flex justify-center w-5/6 max-w-[800px] min-w-[200px] mx-auto">
 		<Searchbar _class="w-full my-12" />
 	</div>
-	<div class="flex w-1/2 mx-auto justify-end">
+	<div class="flex w-5/6 max-w-[800px] min-w-[200px] mx-auto justify-end">
 		<a href="/forum/new">
 			<button
 				type="button"
@@ -23,7 +23,7 @@
 	</div>
 	{#if data.results}
 		{#each data.results as post}
-			<div class=" min-w-[460px] flex flex-row flex-wrap justify-center mt-[16px] text-zinc-200">
+			<div class="min-w-[200px] flex flex-row flex-wrap justify-center mt-[16px] text-zinc-200">
 				<PostCard {post} />
 			</div>
 		{/each}

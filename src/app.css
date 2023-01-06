@@ -2,7 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-
+body {
+	/* position: absolute; */
+}
 /* html {
   @apply bg-zinc-900;
 } */

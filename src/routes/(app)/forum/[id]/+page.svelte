@@ -9,6 +9,7 @@
 	import type { Result as ReplyResult } from '$lib/api/replies.types';
 	import TextEditor from '$lib/TextEditor.svelte';
 	import { createReply, vote as replyVote, PATCH as patchReply } from '$lib/api/replies';
+	import dayjs from 'dayjs';
 	export let data: { post: Post; replies: ReplyResult };
 
 	function toggleTextEditor() {
@@ -21,10 +22,10 @@
 </script>
 
 <div
-	class="flex flex-col mx-auto min-w-[300px] mt-5 block p-2.5 w-7/12 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500  items-center"
+	class="flex flex-col mx-auto min-w-[200px] mt-5 block p-2.5 w-7/12 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500  items-center"
 >
 	<div class="flex flex-row w-full justify-start items-start text-left">
-		<div class="flex flex-col items-center">
+		<div class="flex flex-col items-center mr-4">
 			<TriangleButton
 				onClick={async (e) => {
 					await vote(data.post.id, 'type=up', $page.data.session);
@@ -47,9 +48,26 @@
 	</div>
 	<hr class="my-2 w-full h-px bg-gray-200 border-0 dark:bg-gray-700" />
 	<RenderedPost markdown={data.post.body} />
+	<div class="w-full mt-2 flex flex-row justify-end items-end">
+		<div class="flex flex-row">
+			<div class="border-solid p-1 border rounded-md border-gray-200 flex flex-col">
+				<button class="flex flex-row bg-gray-100 border rounded-full">
+					<img
+						src={$page.data.session?.user?.image}
+						alt="avatar"
+						class="w-8 h-8 rounded-full mr-2"
+					/>
+					<p class="text-gray-500 self-center">{data.post.author?.username}</p>
+				</button>
+				<div class="flex flex-row">
+					<p class="text-gray-500 ml-2">{dayjs(data.post.created_at).fromNow()}</p>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 <div
-	class="flex flex-col mx-auto min-w-[300px] mt-5 block p-2.5 w-7/12 text-sm text-gray-900 items-left"
+	class="flex flex-col mx-auto min-w-[200px] mt-5 p-2.5 w-7/12 text-sm text-gray-900 items-left"
 >
 	<div class="flex flex-row justify-between items-end">
 		<h1 class="text-xl mb-2">{data.replies.count} Replies</h1>
@@ -82,10 +100,10 @@
 </div>
 {#each data.replies.results as reply}
 	<div
-		class="flex flex-col mx-auto min-w-[300px] mt-5 block p-2.5 w-7/12 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500  items-center"
+		class="flex flex-col mx-auto min-w-[200px] mt-5 block p-2.5 w-7/12 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500  items-center"
 	>
 		<div class="flex flex-row w-full justify-start items-start text-left">
-			<div class="flex flex-col items-center">
+			<div class="flex flex-col items-center mr-4 justify-between">
 				<TriangleButton
 					onClick={async (e) => {
 						await replyVote(reply.id, 'type=up', $page.data.session);
@@ -105,7 +123,7 @@
 				/>
 			</div>
 			<h3 class="text-3xl text-gray-500">{reply.title}</h3>
-			<div class="ml-[8px] self-center">
+			<div class="ml-[8px] self-start">
 				{#if reply.accepted_answer || ($page.data.session != null && $page.data.session.userId === data.post.author.id && !data.post.has_accepted_answer)}
 					<button
 						class={reply.accepted_answer ? 'bg-green-300' : 'bg-slate-100'}
