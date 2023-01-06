@@ -96,7 +96,6 @@ export const handle = SvelteKitAuth({
 				);
 				session.userId = decoded.user_id;
 			}
-			console.log('SESSION: ', session);
 			return session;
 		}
 	}

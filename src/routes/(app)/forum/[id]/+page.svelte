@@ -10,6 +10,7 @@
 	import TextEditor from '$lib/TextEditor.svelte';
 	import { createReply, vote as replyVote, PATCH as patchReply } from '$lib/api/replies';
 	import dayjs from 'dayjs';
+	import { toast } from '@zerodevx/svelte-toast';
 	export let data: { post: Post; replies: ReplyResult };
 
 	function toggleTextEditor() {
@@ -66,9 +67,7 @@
 		</div>
 	</div>
 </div>
-<div
-	class="flex flex-col mx-auto min-w-[200px] mt-5 p-2.5 w-7/12 text-sm text-gray-900 items-left"
->
+<div class="flex flex-col mx-auto min-w-[200px] mt-5 p-2.5 w-7/12 text-sm text-gray-900 items-left">
 	<div class="flex flex-row justify-between items-end">
 		<h1 class="text-xl mb-2">{data.replies.count} Replies</h1>
 		<button
@@ -88,11 +87,31 @@
 					createReplyFields.title,
 					createReplyFields.body,
 					$page.data.session
-				);
-				createReplyFields.title = '';
-				createReplyFields.body = '';
-				toggleTextEditor();
-				invalidate(`api:posts/id`);
+				).then((res) => {
+					if (res?.status === 201) {
+						toast.push('Reply created successfully', {
+							theme: {
+								'--toastColor': 'mintcream',
+								'--toastBackground': 'rgba(72,187,120,0.9)',
+								'--toastBarBackground': '#2F855A'
+							},
+							duration: 2000
+						});
+						createReplyFields.title = '';
+						createReplyFields.body = '';
+						toggleTextEditor();
+						invalidate(`api:posts/id`);
+					} else {
+						toast.push("Couldn't create reply", {
+							theme: {
+								'--toastColor': 'mintcream',
+								'--toastBackground': 'rgba(237, 28, 36, 0.9)',
+								'--toastBarBackground': '#D90429'
+							},
+							duration: 2000
+						});
+					}
+				});
 			}}
 			submitButtonText="Post answer"
 		/>
