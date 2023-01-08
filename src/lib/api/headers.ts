@@ -2,6 +2,7 @@ import type { TokenSession } from '$lib/auth.types';
 import jwtDecode from 'jwt-decode';
 import { PUBLIC_API_REFRESH_URL as API_REFRESH_URL } from '$env/static/public';
 import { signOut } from '@auth/sveltekit/client';
+import { goto } from '$app/navigation';
 
 interface DecodedToken {
 	exp: number;
@@ -38,6 +39,10 @@ export async function buildAuthHeaders(
 			}
 		}
 	}
-	await signOut({ callbackUrl: '/login' });
+	try {
+		await signOut({ callbackUrl: '/login' });
+	} catch (error) {
+		goto('/login');
+	}
 	return {};
 }
