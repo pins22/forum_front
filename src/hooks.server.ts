@@ -16,6 +16,7 @@ import jwtDecode from 'jwt-decode';
 
 export const handle = SvelteKitAuth({
 	secret: AUTH_SECRET,
+	trustHost: true,
 	providers: [
 		GitHub({ clientId: GITHUB_OAUTH_CLIENT_ID, clientSecret: GITHUB_OAUTH_SECRET }),
 		Google({ clientId: GOOGLE_OAUTH_CLIENT_ID, clientSecret: GOOGLE_OAUTH_SECRET }),
@@ -74,9 +75,13 @@ export const handle = SvelteKitAuth({
 					}),
 					headers: { 'Content-Type': 'application/json' }
 				});
+				if (!fetchResult.ok) {
+					return false;
+				}
 				const responseBody = await fetchResult.json();
 				user.accessToken = responseBody['access_token'];
 				user.refreshToken = responseBody['refresh_token'];
+				return true;
 			}
 			return false;
 		},
