@@ -9,14 +9,11 @@ import {
 	GITHUB_OAUTH_SECRET,
 	GOOGLE_OAUTH_CLIENT_ID,
 	GOOGLE_OAUTH_SECRET,
-	API_LOGIN_URL,
-	AUTH_SECRET
+	API_LOGIN_URL
 } from '$env/static/private';
 import jwtDecode from 'jwt-decode';
 
 export const handle = SvelteKitAuth({
-	secret: AUTH_SECRET,
-	trustHost: true,
 	providers: [
 		GitHub({ clientId: GITHUB_OAUTH_CLIENT_ID, clientSecret: GITHUB_OAUTH_SECRET }),
 		Google({ clientId: GOOGLE_OAUTH_CLIENT_ID, clientSecret: GOOGLE_OAUTH_SECRET }),
