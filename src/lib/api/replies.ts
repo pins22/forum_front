@@ -1,7 +1,8 @@
-import { PUBLIC_API_URL as API_URL } from '$env/static/public';
+import { PUBLIC_BROWSER_API_URL as BROWSER_API_URL, PUBLIC_SERVER_API_URL as SERVER_API_URL } from '$env/static/public';
 import type { TokenSession } from '$lib/auth.types';
 import type { Session } from '@auth/core';
 import { buildAuthHeaders } from './headers';
+import { browser } from '$app/environment';
 import type { Reply } from './replies.types';
 
 interface GetParams {
@@ -14,7 +15,7 @@ export const getReplies = async (post_id: string | number, { id, session }: GetP
 	if (session !== null) {
 		authHeaders = await buildAuthHeaders(<TokenSession>session);
 	}
-	const data = await fetch(`${API_URL}/api/v1/posts/${post_id}/reply${id ? `/${id}` : ''}`, {
+	const data = await fetch(`${browser ? BROWSER_API_URL : SERVER_API_URL}/api/v1/posts/${post_id}/reply${id ? `/${id}` : ''}`, {
 		method: 'GET',
 		headers: Object.assign(authHeaders, {
 			'Content-Type': 'application/json'
@@ -34,7 +35,7 @@ export const createReply = async (
 		return;
 	}
 	const tokenSession: TokenSession = <TokenSession>session;
-	const data = await fetch(`${API_URL}/api/v1/posts/${postId}/reply/`, {
+	const data = await fetch(`${browser ? BROWSER_API_URL : SERVER_API_URL}/api/v1/posts/${postId}/reply/`, {
 		method: 'POST',
 		headers: Object.assign(await buildAuthHeaders(tokenSession), {
 			'Content-Type': 'application/json'
@@ -55,7 +56,7 @@ export const vote = async (
 	}
 
 	const tokenSession: TokenSession = <TokenSession>session;
-	const response = await fetch(`${API_URL}/api/v1/posts/reply/${id}/vote?${query}`, {
+	const response = await fetch(`${browser ? BROWSER_API_URL : SERVER_API_URL}/api/v1/posts/reply/${id}/vote?${query}`, {
 		method: 'PATCH',
 		headers: Object.assign(await buildAuthHeaders(tokenSession), {
 			'Content-Type': 'application/json'
@@ -77,7 +78,7 @@ export const PATCH = async (
 		return;
 	}
 	const tokenSession: TokenSession = <TokenSession>session;
-	const response = await fetch(`${API_URL}/api/v1/posts/reply/${id}`, {
+	const response = await fetch(`${browser ? BROWSER_API_URL : SERVER_API_URL}/api/v1/posts/reply/${id}`, {
 		method: 'PATCH',
 		headers: Object.assign(await buildAuthHeaders(tokenSession), {
 			'Content-Type': 'application/json'

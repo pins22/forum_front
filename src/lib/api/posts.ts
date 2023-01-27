@@ -1,7 +1,8 @@
-import { PUBLIC_API_URL as API_URL } from '$env/static/public';
+import { PUBLIC_BROWSER_API_URL as BROWSER_API_URL, PUBLIC_SERVER_API_URL as SERVER_API_URL } from '$env/static/public';
 import type { TokenSession } from '$lib/auth.types';
 import type { Session } from '@auth/core';
 import { buildAuthHeaders } from './headers';
+import { browser } from '$app/environment';
 
 interface GetParams {
 	id?: string | undefined;
@@ -13,12 +14,19 @@ export const GET = async ({ id, session }: GetParams) => {
 	if (session !== null) {
 		authHeaders = await buildAuthHeaders(<TokenSession>session);
 	}
-	const data = await fetch(`${API_URL}/api/v1/posts${id ? `/${id}` : ''}`, {
+	let data: any;
+	try {
+
+		data = await fetch(`${browser ? BROWSER_API_URL : SERVER_API_URL}/api/v1/posts${id ? `/${id}` : ''}`, {
 		method: 'GET',
 		headers: Object.assign(authHeaders, {
 			'Content-Type': 'application/json'
 		})
 	});
+} catch (error) {
+	console.log(error);
+	throw error;
+}
 	return data;
 };
 
@@ -28,7 +36,7 @@ export const POST = async (body: object | string, session: TokenSession | Sessio
 		return;
 	}
 	const tokenSession: TokenSession = <TokenSession>session;
-	const data = await fetch(`${API_URL}/api/v1/posts/`, {
+	const data = await fetch(`${browser ? BROWSER_API_URL : SERVER_API_URL}/api/v1/posts/`, {
 		method: 'POST',
 		headers: Object.assign(await buildAuthHeaders(tokenSession), {
 			'Content-Type': 'application/json'
@@ -49,7 +57,7 @@ export const vote = async (
 	}
 
 	const tokenSession: TokenSession = <TokenSession>session;
-	const response = await fetch(`${API_URL}/api/v1/posts/${id}/vote?${query}`, {
+	const response = await fetch(`${browser ? BROWSER_API_URL : SERVER_API_URL}/api/v1/posts/${id}/vote?${query}`, {
 		method: 'PATCH',
 		headers: Object.assign(await buildAuthHeaders(tokenSession), {
 			'Content-Type': 'application/json'

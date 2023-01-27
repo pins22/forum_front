@@ -1,7 +1,8 @@
 import type { TokenSession } from '$lib/auth.types';
 import jwtDecode from 'jwt-decode';
-import { PUBLIC_API_REFRESH_URL as API_REFRESH_URL } from '$env/static/public';
+import { PUBLIC_SERVER_API_REFRESH_URL as SERVER_API_REFRESH_URL, PUBLIC_BROWSER_API_REFRESH_URL as BROWSER_API_REFRESH_URL } from '$env/static/public';
 import { signOut } from '@auth/sveltekit/client';
+import { browser } from '$app/environment';
 
 interface DecodedToken {
 	exp: number;
@@ -20,7 +21,7 @@ export async function buildAuthHeaders(
 		if (expiration >= now) {
 			return { Authorization: `Bearer ${session.accessToken}` };
 		} else if (session.refreshToken) {
-			const result = await fetch(API_REFRESH_URL, {
+			const result = await fetch(browser ? BROWSER_API_REFRESH_URL : SERVER_API_REFRESH_URL, {
 				method: 'POST',
 				body: JSON.stringify({
 					refresh: session.refreshToken
