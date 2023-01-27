@@ -1,15 +1,15 @@
 <script lang="ts">
 	import { signIn, signOut } from '@auth/sveltekit/client';
-	import { PUBLIC_API_URL as API_URL } from '$env/static/public';
 	import { toast } from '@zerodevx/svelte-toast';
 	let createNewAccount: boolean = false;
 	let email: string = '';
 	let username: string = '';
 	let password1: string = '';
 	let password2: string = '';
+	import { browser } from '$app/environment';
 
 	async function register() {
-		const response = await fetch(`${API_URL}/api/v1/auth/registration/`, {
+		const response = await fetch(`${browser ? BROWSER_API_URL : SERVER_API_URL}/api/v1/auth/registration/`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
